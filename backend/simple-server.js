@@ -6,11 +6,9 @@ const app = express();
 const prisma = new PrismaClient();
 const PORT = 5000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Health check
 app.get('/health', (req, res) => {
   res.json({
     success: true,
@@ -19,7 +17,6 @@ app.get('/health', (req, res) => {
   });
 });
 
-// GET /tasks
 app.get('/tasks', async (req, res) => {
   try {
     const tasks = await prisma.task.findMany({
@@ -38,7 +35,6 @@ app.get('/tasks', async (req, res) => {
   }
 });
 
-// POST /tasks
 app.post('/tasks', async (req, res) => {
   try {
     const { title, color = '#3B82F6' } = req.body;
@@ -67,7 +63,6 @@ app.post('/tasks', async (req, res) => {
   }
 });
 
-// PUT /tasks/:id
 app.put('/tasks/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -102,7 +97,6 @@ app.put('/tasks/:id', async (req, res) => {
   }
 });
 
-// DELETE /tasks/:id
 app.delete('/tasks/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -134,13 +128,6 @@ app.delete('/tasks/:id', async (req, res) => {
   }
 });
 
-// Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log('📋 Available endpoints:');
-  console.log('  GET    /health');
-  console.log('  GET    /tasks');
-  console.log('  POST   /tasks');
-  console.log('  PUT    /tasks/:id');
-  console.log('  DELETE /tasks/:id');
+  console.log(`Server running on http://localhost:${PORT}`);
 });
